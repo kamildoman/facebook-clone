@@ -1,26 +1,45 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import SinglePost from "./SinglePost";
+import AddPostModal from "./AddPostModal";
+import { connect } from "react-redux";
+import { getPostsAPI } from "../actions";
 
-function Middle() {
+function Middle(props) {
+  const [modalOpen, setModalOpen] = useState(false);
+
+  function handleModalOpen() {
+    setModalOpen(!modalOpen);
+  }
+
+  useEffect(() => {
+    props.getPosts();
+  }, []);
+
   return (
     <Container>
+      {modalOpen && <AddPostModal handleModalOpen={handleModalOpen} />}
       <Content>
         <ShareBox>
           <UserIcon>
-            <img src="/images/user.svg" alt="user" />
+            {props.user && props.user.photoURL ? (
+              <img src={props.user.photoURL} alt="" />
+            ) : (
+              <img src="images/user.svg" alt="" />
+            )}
           </UserIcon>
-          <button>What are you thinking about, Name?</button>
+          <button onClick={() => handleModalOpen()}>
+            What are you thinking about,{" "}
+            {props.user && props.user.displayName.split(" ")[0]}?
+          </button>
         </ShareBox>
-        <UploadImage>
+        <UploadImage onClick={() => handleModalOpen()}>
           <img src="/images/middle/photo-video.png" alt="" /> Photo/Video
         </UploadImage>
       </Content>
-      <SinglePost />
-      <SinglePost />
-      <SinglePost />
-      <SinglePost />
-      <SinglePost />
+      {props.posts.map((post, key) => (
+        <SinglePost key={key} post={post} />
+      ))}
     </Container>
   );
 }
@@ -29,7 +48,7 @@ const Container = styled.div`
   grid-area: middle;
   max-height: calc(100vh - 80px);
 
-  z-index: 99999;
+  z-index: 999;
   height: 100vh;
   width: 100%;
   overflow-y: auto;
@@ -103,4 +122,15 @@ const UploadImage = styled.div`
   }
 `;
 
-export default Middle;
+const mapStateToProps = (state) => {
+  return {
+    user: state.userState.user,
+    posts: state.postState.posts,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  getPosts: () => dispatch(getPostsAPI()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Middle);

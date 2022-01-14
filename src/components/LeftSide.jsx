@@ -1,12 +1,18 @@
 import React from "react";
 import styled from "styled-components";
+import { connect } from "react-redux";
 
-function LeftSide() {
+function LeftSide(props) {
   return (
     <Container>
       <Icons>
         <CircleIcon>
-          <img src="/images/user.svg" alt="user" /> Name
+          {props.user && props.user.photoURL ? (
+            <img src={props.user.photoURL} alt="" />
+          ) : (
+            <img src="images/user.svg" alt="" />
+          )}{" "}
+          {props.user ? props.user.displayName : "name"}
         </CircleIcon>
         <Icon>
           <img src="/images/leftside/friends.png" alt="" /> Friends
@@ -91,4 +97,12 @@ const CircleIcon = styled(Icon)`
   }
 `;
 
-export default LeftSide;
+const mapStateToProps = (state) => {
+  return {
+    user: state.userState.user,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => ({});
+
+export default connect(mapStateToProps, mapDispatchToProps)(LeftSide);

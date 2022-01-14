@@ -1,28 +1,26 @@
 import React from "react";
 import styled from "styled-components";
 
-function SinglePost() {
+function SinglePost(props) {
   return (
     <Container>
       <Content>
         <SharedPerson>
-          <img src="/images/user.svg" alt="user" />
+          <img src={props.post.user.image} alt="user" />
           <PersonInfo>
-            <h3>Name Surname</h3>
+            <h3>{props.post.user.title}</h3>
             <h5>4h ago</h5>
           </PersonInfo>
         </SharedPerson>
         <Post>
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry's standard dummy text ever
-          since the 1500s, when an unknown printer took a galley of type and
-          scrambled it to make a type specimen book. It has survived not only
-          five centuries,
-          <img src="/images/example-photo.jpg" alt="" />
+          {props.post.description}
+          {props.post.sharedIMG && <img src={props.post.sharedIMG} alt="" />}
         </Post>
         <SocialCount>
-          <img src="/images/like.png" alt="like" />
-          <p>0 comments</p>
+          <div>
+            <img src="/images/like.png" alt="like" /> {props.post.likes}
+          </div>
+          <p>{props.post.comments} comments</p>
         </SocialCount>
         <SocialActions>
           <button>
@@ -106,8 +104,14 @@ const SocialCount = styled.div`
   padding-bottom: 8px;
   border-bottom: 1px solid #3a3b3c;
 
+  div {
+    display: flex;
+    align-items: center;
+  }
+
   img {
-    width: 25px;
+    width: 20px;
+    margin-right: 4px;
   }
 
   img:hover {

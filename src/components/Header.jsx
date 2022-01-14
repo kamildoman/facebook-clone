@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import { connect } from "react-redux";
+import { signOutAPI } from "../actions";
 
-function Header() {
+function Header(props) {
+  const [showLogout, setShowLogout] = useState(false);
   return (
     <Container>
       <Logo>
@@ -26,9 +29,21 @@ function Header() {
         </Icon>
       </NavigationIcons>
       <RightIcons>
-        <UserProfile>
-          <img src="/images/user.svg" alt="user" /> Name
+        <UserProfile
+          onMouseEnter={() => setShowLogout(true)}
+          onMouseLeave={() => setShowLogout(false)}
+        >
+          {props.user && props.user.photoURL ? (
+            <img src={props.user.photoURL} alt="" />
+          ) : (
+            <img src="images/user.svg" alt="" />
+          )}{" "}
+          {props.user ? props.user.displayName : "name"}
+          {showLogout && (
+            <LogoutButton onClick={() => props.signOut()}>Logout</LogoutButton>
+          )}
         </UserProfile>
+
         <CommunicationIcon>
           <img src="/images/menu-icon.png" alt="menu" />
         </CommunicationIcon>
@@ -147,6 +162,7 @@ const UserProfile = styled.div`
   font-size: 14px;
   font-weight: 700;
   margin-right: 8px;
+  cursor: pointer;
   img {
     border-radius: 50%;
     margin-right: 7px;
@@ -169,4 +185,24 @@ const CommunicationIcon = styled(Icon)`
   }
 `;
 
-export default Header;
+const LogoutButton = styled.button`
+  position: absolute;
+  margin-top: 74px;
+  border: none;
+  background-color: #242526;
+  color: white;
+  padding: 10px 23px;
+  cursor: pointer;
+`;
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.userState.user,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  signOut: () => dispatch(signOutAPI()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

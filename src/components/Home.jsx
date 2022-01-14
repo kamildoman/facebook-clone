@@ -3,10 +3,14 @@ import styled from "styled-components";
 import LeftSide from "./LeftSide";
 import Middle from "./Middle";
 import RightSide from "./RightSide";
+import { connect } from "react-redux";
+import { signOutAPI } from "../actions";
+import { Navigate } from "react-router-dom";
 
-function Home() {
+function Home(props) {
   return (
     <Container>
+      {!props.user && <Navigate to="/" />}
       <Layout>
         <LeftSide />
         <Middle />
@@ -19,6 +23,10 @@ function Home() {
 const Container = styled.div`
   padding-top: 52px;
   max-width: 100%;
+  background-color: #18191a;
+  position: absolute;
+  left: 0;
+  right: 0;
 `;
 
 const Layout = styled.div`
@@ -36,4 +44,14 @@ const Layout = styled.div`
   }
 `;
 
-export default Home;
+const mapStateToProps = (state) => {
+  return {
+    user: state.userState.user,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  signOut: () => dispatch(signOutAPI()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
