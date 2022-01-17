@@ -7,6 +7,7 @@ import db from "../firebase";
 import WriteComment from "./WriteComment";
 import SingleComment from "./SingleComment";
 import { getCommentsAPI } from "../actions";
+import Pluralize from "react-pluralize";
 
 function SinglePost(props) {
   const [showComments, setShowComments] = useState(false);
@@ -84,12 +85,14 @@ function SinglePost(props) {
           )}
 
           <p onClick={() => handleShowComments()}>
-            {
-              props.comments.filter((comment) => {
-                return comment.data().postID === props.id;
-              }).length
-            }{" "}
-            comments
+            <Pluralize
+              singular={"comment"}
+              count={
+                props.comments.filter((comment) => {
+                  return comment.data().postID === props.id;
+                }).length
+              }
+            />
           </p>
         </SocialCount>
 

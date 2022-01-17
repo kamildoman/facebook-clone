@@ -43,7 +43,7 @@ const ShareBox = styled.div`
       resize: none;
       font-size: 16px;
       font-weight: 300;
-      width: 85%;
+      width: 100%;
       border-radius: 22px;
       border: none;
       background-color: #3a3b3c;
