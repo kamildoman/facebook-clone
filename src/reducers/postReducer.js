@@ -2,7 +2,7 @@ export const initState = {
   posts: [],
 };
 
-const articleReducer = (state = initState, action) => {
+const postReducer = (state = initState, action) => {
   switch (action.type) {
     case "GET_POSTS":
       return {
@@ -14,4 +14,4 @@ const articleReducer = (state = initState, action) => {
   }
 };
 
-export default articleReducer;
+export default postReducer;

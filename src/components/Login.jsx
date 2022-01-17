@@ -5,6 +5,7 @@ import { signInAPI } from "../actions";
 import { Navigate } from "react-router-dom";
 
 function Login(props) {
+  console.log(props.user);
   return (
     <Container>
       {props.user && <Navigate to="/home" />}

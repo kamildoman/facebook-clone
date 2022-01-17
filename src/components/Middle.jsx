@@ -38,7 +38,7 @@ function Middle(props) {
         </UploadImage>
       </Content>
       {props.posts.map((post, key) => (
-        <SinglePost key={key} post={post} />
+        <SinglePost key={key} post={post.data()} id={post.id} />
       ))}
     </Container>
   );

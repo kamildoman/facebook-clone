@@ -12,7 +12,6 @@ export function signInAPI() {
       .signInWithPopup(provider)
       .then((payload) => {
         dispatch(setUser(payload.user));
-        console.log(payload.user);
       })
       .catch((error) => {
         alert(error.message);
@@ -43,6 +42,11 @@ export const getPosts = (payload) => ({
   payload: payload,
 });
 
+export const getComments = (payload) => ({
+  type: "GET_COMMENTS",
+  payload: payload,
+});
+
 export function postAPI(payload) {
   return (dispatch) => {
     if (payload.image !== "") {
@@ -60,8 +64,8 @@ export function postAPI(payload) {
           },
           video: payload.video,
           sharedIMG: downloadURL,
-          comments: 0,
-          likes: 0,
+          comments: [],
+          likes: [],
           description: payload.description,
         });
       });
@@ -75,8 +79,8 @@ export function postAPI(payload) {
         },
         video: payload.video,
         sharedIMG: "",
-        comments: 0,
-        likes: 0,
+        comments: [],
+        likes: [],
         description: payload.description,
       });
     } else {
@@ -89,11 +93,40 @@ export function postAPI(payload) {
         },
         video: "",
         sharedIMG: "",
-        comments: 0,
-        likes: 0,
+        comments: [],
+        likes: [],
         description: payload.description,
       });
     }
+  };
+}
+
+export function commentAPI(payload) {
+  return (dispatch) => {
+    db.collection("comments").add({
+      user: {
+        description: payload.user.email,
+        title: payload.user.displayName,
+        date: payload.timestamp,
+        image: payload.user.photoURL,
+      },
+      postID: payload.postID,
+      comment: payload.comment,
+      likes: [],
+    });
+  };
+}
+
+export function getCommentsAPI() {
+  return (dispatch) => {
+    let payload;
+
+    db.collection("comments")
+      .orderBy("user.date", "desc")
+      .onSnapshot((snapshot) => {
+        payload = snapshot.docs;
+        dispatch(getComments(payload));
+      });
   };
 }
 
@@ -104,7 +137,8 @@ export function getPostsAPI() {
     db.collection("posts")
       .orderBy("user.date", "desc")
       .onSnapshot((snapshot) => {
-        payload = snapshot.docs.map((doc) => doc.data());
+        // payload = snapshot.docs.map((doc) => doc.data());
+        payload = snapshot.docs;
         dispatch(getPosts(payload));
       });
   };
