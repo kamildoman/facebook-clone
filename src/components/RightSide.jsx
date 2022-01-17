@@ -1,12 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import SingleContact from "./SingleContact";
+import ChatBox from "./ChatBox";
 
 function RightSide() {
+  const [chatOpen, setChatOpen] = useState(false);
+
+  function handleChatOpen() {
+    setChatOpen(!chatOpen);
+  }
+
   return (
     <Container>
       <Content>Contacts</Content>
-      <SingleContact />
+      <SingleContact handleChatOpen={handleChatOpen} />
+      {chatOpen && <ChatBox handleChatOpen={handleChatOpen} />}
     </Container>
   );
 }

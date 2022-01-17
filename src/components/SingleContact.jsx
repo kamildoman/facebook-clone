@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 
-function SingleContact() {
+function SingleContact(props) {
   return (
     <Container>
-      <UserIcon>
-        <img src="/images/user.svg" alt="user" /> Name Surname
+      <UserIcon onClick={() => props.handleChatOpen()}>
+        <img src="/images/user.svg" alt="user" /> Chat Bot
       </UserIcon>
     </Container>
   );

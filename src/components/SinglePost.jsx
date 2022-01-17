@@ -10,18 +10,6 @@ import { getCommentsAPI } from "../actions";
 
 function SinglePost(props) {
   const [showComments, setShowComments] = useState(false);
-  // const [currentPostsComments, setCurrentPostsComments] = useState([]);
-
-  // async function handleCurrentPostsComments() {
-  //   await props.getComments();
-  //   props.comments.map((comment) => {
-  //     if (comment.data().postID == props.id) {
-  //       setCurrentPostsComments([...currentPostsComments, comment.data()]);
-  //     }
-  //   });
-  //   console.log("AAA");
-  //   console.log(currentPostsComments);
-  // }
 
   function handleShowComments() {
     setShowComments(!showComments);
