@@ -8,6 +8,7 @@ import WriteComment from "./WriteComment";
 import SingleComment from "./SingleComment";
 import { getCommentsAPI } from "../actions";
 import Pluralize from "react-pluralize";
+import ReactPlayer from "react-player";
 
 function SinglePost(props) {
   const [showComments, setShowComments] = useState(false);
@@ -73,6 +74,11 @@ function SinglePost(props) {
         <Post>
           {props.post.description}
           {props.post.sharedIMG && <img src={props.post.sharedIMG} alt="" />}
+          {props.post.video && (
+            <div>
+              <ReactPlayer width={"100%"} url={props.post.video} />
+            </div>
+          )}
         </Post>
         <SocialCount>
           <div onClick={() => like()}>
@@ -180,6 +186,10 @@ const Post = styled.div`
   img {
     margin-top: 10px;
     width: 100%;
+  }
+
+  div {
+    margin-top: 10px;
   }
 `;
 

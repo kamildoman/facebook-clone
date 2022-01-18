@@ -5,10 +5,13 @@ import { postAPI } from "../actions";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
+import ReactPlayer from "react-player";
 
 function AddPostModal(props) {
   const [publishText, setPublishText] = useState("");
   const [shareImage, setShareImage] = useState("");
+  const [shareVideo, setShareVideo] = useState("");
+  const [showVideoLink, setShowVideoLink] = useState(false);
 
   function handlePublishText(e) {
     setPublishText(e.target.value);
@@ -24,7 +27,7 @@ function AddPostModal(props) {
     }
     const payload = {
       image: shareImage,
-      video: "",
+      video: shareVideo,
       user: props.user,
       description: publishText,
       timestamp: firebase.firestore.Timestamp.now(),
@@ -65,26 +68,44 @@ function AddPostModal(props) {
         </Editor>
         <ImageDisplay>
           {shareImage && <img src={URL.createObjectURL(shareImage)} alt="" />}
+          {shareVideo && <ReactPlayer width={"100%"} url={shareVideo} />}
         </ImageDisplay>
         <ContentAdd>
-          <input
-            type="file"
-            accept="image/gif, image/jpeg, image/png"
-            name="image"
-            id="file"
-            style={{ display: "none" }}
-            onChange={(e) => {
-              handleImageChange(e);
-            }}
-          />
+          {!shareVideo && (
+            <input
+              type="file"
+              accept="image/gif, image/jpeg, image/png"
+              name="image"
+              id="file"
+              style={{ display: "none" }}
+              onChange={(e) => {
+                handleImageChange(e);
+              }}
+            />
+          )}
           Add to post{" "}
-          <label htmlFor="file" style={{ cursor: "pointer" }}>
-            <div>
-              <img src="/images/leftside/video.png" alt="" />
-              <img src="/images/middle/photo-video.png" alt="" />
-            </div>
-          </label>
+          <PhotoVideo>
+            <label htmlFor="file" style={{ cursor: "pointer" }}>
+              <div>
+                <img src="/images/middle/photo-video.png" alt="" />
+              </div>
+            </label>
+            <img
+              style={{ cursor: "pointer" }}
+              onClick={() => setShowVideoLink(!showVideoLink)}
+              src="/images/leftside/video.png"
+              alt=""
+            />
+          </PhotoVideo>
         </ContentAdd>
+        {showVideoLink && !shareImage && (
+          <VideoInput
+            type="text"
+            placeholder="Input a video link"
+            value={shareVideo}
+            onChange={(e) => setShareVideo(e.target.value)}
+          />
+        )}
         <PublishButton disabled={!publishText} onClick={(e) => makePost(e)}>
           Publish
         </PublishButton>
@@ -256,6 +277,33 @@ const PublishButton = styled.button`
   &:disabled {
     background-color: #505151;
     cursor: default;
+  }
+`;
+
+const VideoInput = styled.input`
+  margin: auto;
+  width: 80%;
+  overflow: auto;
+  padding: 15px;
+  height: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  resize: none;
+  font-size: 16px;
+  font-weight: 300;
+  width: 85%;
+  border-radius: 22px;
+  border: none;
+  background-color: #3a3b3c;
+  color: #b0b3b8;
+  cursor: text;
+`;
+
+const PhotoVideo = styled.div`
+  display: flex;
+  label {
+    margin-right: 20px;
   }
 `;
 

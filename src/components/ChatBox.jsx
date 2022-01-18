@@ -174,7 +174,7 @@ const MessageArea = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  height: 350px;
+  height: 400px;
   overflow: auto;
   flex-direction: column-reverse;
 `;
