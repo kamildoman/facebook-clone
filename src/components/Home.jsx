@@ -27,6 +27,7 @@ const Container = styled.div`
   position: absolute;
   left: 0;
   right: 0;
+  overflow-y: auto;
 `;
 
 const Layout = styled.div`

@@ -53,7 +53,7 @@ const Container = styled.div`
   width: 100%;
   overflow-y: auto;
   ::-webkit-scrollbar {
-    display: none;
+    display: scroll;
   }
 `;
 const ShareBox = styled.div`
