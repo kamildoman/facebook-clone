@@ -91,6 +91,8 @@ const UserIcon = styled.div`
   border-radius: 8px;
   img {
     width: 40px;
+    height: 40px;
+    object-fit: cover;
     border-radius: 50%;
   }
 `;

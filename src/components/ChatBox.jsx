@@ -25,7 +25,7 @@ function ChatBox(props) {
       <Content>
         <ShareBox>
           <UserIcon>
-            <img src="images/user.svg" alt="" />
+            <img src="/images/user.svg" alt="" />
           </UserIcon>
           <Menu>
             <Name>Chat Bot</Name>

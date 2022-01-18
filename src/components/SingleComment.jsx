@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 
 function SingleComment(props) {
-  console.log(props.comment.data().comment);
   return (
     <Container>
       <Content>
@@ -75,6 +74,8 @@ const UserIcon = styled.div`
   border-radius: 8px;
   img {
     width: 40px;
+    height: 40px;
+    object-fit: cover;
     border-radius: 50%;
   }
 `;

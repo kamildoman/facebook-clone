@@ -9,17 +9,33 @@ import SingleComment from "./SingleComment";
 import { getCommentsAPI } from "../actions";
 import Pluralize from "react-pluralize";
 import ReactPlayer from "react-player";
+import { getUsersAPI } from "../actions";
 
 function SinglePost(props) {
   const [showComments, setShowComments] = useState(false);
+  const [userPhoto, setUserPhoto] = useState("");
 
   function handleShowComments() {
     setShowComments(!showComments);
   }
 
+  // if I change a user's profile the photo won't change on his previous posts. This function changes it
+  function getUserPhoto() {
+    props.users.map((singleUser) => {
+      if (singleUser.data().email === props.post.user.description) {
+        setUserPhoto(singleUser.data().photoURL);
+      }
+    });
+  }
+
   useEffect(() => {
     props.getComments();
+    props.getUsers();
   }, []);
+
+  useEffect(() => {
+    getUserPhoto();
+  }, [props.users]);
 
   function like() {
     let peopleWhoLiked = props.post.likes;
@@ -63,7 +79,7 @@ function SinglePost(props) {
     <Container>
       <Content>
         <SharedPerson>
-          <img src={props.post.user.image} alt="user" />
+          <img src={userPhoto} alt="user" />
 
           <PersonInfo>
             <h3>{props.post.user.title}</h3>
@@ -147,6 +163,8 @@ const SharedPerson = styled.div`
 
   img {
     width: 40px;
+    height: 40px;
+    object-fit: cover;
     border-radius: 50%;
     margin-right: 8px;
     cursor: pointer;
@@ -256,12 +274,14 @@ const mapStateToProps = (state) => {
     user: state.userState.user,
     posts: state.postState.posts,
     comments: state.commentState.comments,
+    users: state.usersState.users,
   };
 };
 
 const mapDispatchToProps = (dispatch) => ({
   getPosts: () => dispatch(getPostsAPI()),
   getComments: () => dispatch(getCommentsAPI()),
+  getUsers: () => dispatch(getUsersAPI()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SinglePost);

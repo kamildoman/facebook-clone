@@ -10,7 +10,7 @@ function SinglePrivateMessage(props) {
             {props.user && props.user.photoURL ? (
               <img src={props.user.photoURL} alt="" />
             ) : (
-              <img src="images/user.svg" alt="" />
+              <img src="/images/user.svg" alt="" />
             )}
           </UserIcon>
           <div>

@@ -191,6 +191,8 @@ const SharedPerson = styled.div`
 
   img {
     width: 40px;
+    height: 40px;
+    object-fit: cover;
     border-radius: 50%;
     margin-right: 8px;
     cursor: pointer;
@@ -218,6 +220,7 @@ const PersonInfo = styled.div`
     border-radius: 7px;
     img {
       width: 20px;
+      height: 20px;
     }
   }
 `;

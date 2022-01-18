@@ -5,6 +5,7 @@ import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { getUserAuth } from "./actions";
 import { connect } from "react-redux";
+import UserProfile from "./components/UserProfile";
 
 function App(props) {
   useEffect(() => {
@@ -16,6 +17,7 @@ function App(props) {
         <Routes>
           <Route exact path="/" element={<Login />} />
           <Route exact path="/home" element={<Main />} />
+          <Route path="/profile/:email" element={<UserProfile />} />
         </Routes>
       </Router>
     </div>

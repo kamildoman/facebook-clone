@@ -6,16 +6,59 @@ export const setUser = (payload) => ({
   user: payload,
 });
 
-export function signInAPI() {
-  return (dispatch) => {
-    auth
-      .signInWithPopup(provider)
-      .then((payload) => {
-        dispatch(setUser(payload.user));
-      })
-      .catch((error) => {
-        alert(error.message);
+// export function signInAPI() {
+//   return (dispatch) => {
+//     auth
+//       .signInWithPopup(provider)
+//       .then((payload) => {
+//         console.log(payload.user);
+//         dispatch(setUser(payload.user));
+//       })
+//       .catch((error) => {
+//         alert(error.message);
+//       });
+//   };
+// }
+
+export async function signInAPI() {
+  try {
+    const res = await auth.signInWithPopup(provider);
+    const user = res.user;
+    const query = await db
+      .collection("users")
+      .where("uid", "==", user.uid)
+      .get();
+    if (query.docs.length === 0) {
+      await db.collection("users").add({
+        uid: user.uid,
+        displayName: user.displayName,
+        authProvider: "google",
+        email: user.email,
+        photoURL: user.photoURL,
       });
+    }
+    return (dispatch) => {
+      dispatch(setUser(user));
+    };
+  } catch (err) {
+    console.error(err);
+    alert(err.message);
+  }
+}
+
+export const getUsers = (payload) => ({
+  type: "GET_USERS",
+  payload: payload,
+});
+
+export function getUsersAPI() {
+  return (dispatch) => {
+    let payload;
+
+    db.collection("users").onSnapshot((snapshot) => {
+      payload = snapshot.docs;
+      dispatch(getUsers(payload));
+    });
   };
 }
 
@@ -23,7 +66,11 @@ export function getUserAuth() {
   return (dispatch) => {
     auth.onAuthStateChanged(async (user) => {
       if (user) {
-        dispatch(setUser(user));
+        const query = await db
+          .collection("users")
+          .where("uid", "==", user.uid)
+          .get()
+          .then((abc) => abc.docs.map((e) => dispatch(setUser(e.data()))));
       }
     });
   };

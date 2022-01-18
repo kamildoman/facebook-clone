@@ -1,12 +1,18 @@
 import React from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function LeftSide(props) {
+  const navigate = useNavigate();
+  function navigateTo() {
+    navigate("/profile/" + props.user.email);
+  }
+
   return (
     <Container>
       <Icons>
-        <CircleIcon>
+        <CircleIcon onClick={() => navigateTo()}>
           {props.user && props.user.photoURL ? (
             <img src={props.user.photoURL} alt="" />
           ) : (
@@ -93,6 +99,8 @@ const Icon = styled.div`
 
 const CircleIcon = styled(Icon)`
   img {
+    height: 30px;
+    object-fit: cover;
     border-radius: 50%;
   }
 `;

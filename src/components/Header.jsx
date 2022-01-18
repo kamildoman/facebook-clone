@@ -2,12 +2,22 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { signOutAPI } from "../actions";
+import { useNavigate } from "react-router-dom";
 
 function Header(props) {
   const [showLogout, setShowLogout] = useState(false);
+
+  const navigate = useNavigate();
+  function navigateTo() {
+    navigate("/profile/" + props.user.email);
+  }
+
+  function homePage() {
+    navigate("/home/");
+  }
   return (
     <Container>
-      <Logo>
+      <Logo onClick={() => homePage()}>
         <img src="/images/fb-icon.png" alt="icon" />
       </Logo>
       <SearchBar>
@@ -32,6 +42,7 @@ function Header(props) {
         <UserProfile
           onMouseEnter={() => setShowLogout(true)}
           onMouseLeave={() => setShowLogout(false)}
+          onClick={() => navigateTo()}
         >
           {props.user && props.user.photoURL ? (
             <img src={props.user.photoURL} alt="" />
@@ -167,6 +178,8 @@ const UserProfile = styled.div`
     border-radius: 50%;
     margin-right: 7px;
     width: 35px;
+    height: 35px;
+    object-fit: cover;
   }
 `;
 
