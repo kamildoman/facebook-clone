@@ -37,8 +37,8 @@ export function signInAPI() {
           email: user.email,
           photoURL: user.photoURL,
         });
+        // dispatch(setUser(user));
       }
-      dispatch(setUser(user));
     } catch (err) {
       console.error(err);
       alert(err.message);

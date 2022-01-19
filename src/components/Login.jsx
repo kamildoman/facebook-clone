@@ -4,23 +4,14 @@ import { connect } from "react-redux";
 import { signInAPI } from "../actions";
 import { Navigate } from "react-router-dom";
 import { getUserAuth } from "../actions";
-import { useNavigate } from "react-router-dom";
 
 function Login(props) {
-  const navigate = useNavigate();
   async function signingIn() {
     await props.signIn();
-    // var time = 1;
-
-    // setInterval(function () {
-    //   if (time <= 3 && !props.user) {
-    //     time++;
-    //     console.log("loggin in...");
-    //     console.log(props.user);
-    //   } else {
-    //     navigate("/home/");
-    //   }
-    // }, 500);
+    if (!props.user) {
+      console.log("Loggin in...");
+      setTimeout(window.location.reload(false), 1000);
+    }
   }
 
   return (
@@ -115,6 +106,7 @@ const Google = styled.button`
 const mapStateToProps = (state) => {
   return {
     user: state.userState.user,
+    users: state.usersState.users,
   };
 };
 
