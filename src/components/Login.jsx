@@ -7,6 +7,7 @@ import { getUserAuth } from "../actions";
 
 function Login(props) {
   async function signingIn() {
+    console.log("Loggin in...");
     await props.signIn();
     if (!props.user) {
       console.log("Loggin in...");
