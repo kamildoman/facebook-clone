@@ -10,7 +10,7 @@ import UserProfile from "./components/UserProfile";
 function App(props) {
   useEffect(() => {
     props.getUserAuth();
-  }, []);
+  }, [props.users]);
   return (
     <div className="App">
       <Router>
@@ -25,7 +25,7 @@ function App(props) {
 }
 
 const mapStateToProps = (state) => {
-  return {};
+  return { users: state.usersState.users };
 };
 
 const mapDispatchToProps = (dispatch) => ({
