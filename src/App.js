@@ -10,7 +10,7 @@ import UserProfile from "./components/UserProfile";
 function App(props) {
   useEffect(() => {
     props.getUserAuth();
-  }, [props.users]);
+  }, []);
   return (
     <div className="App">
       <Router>

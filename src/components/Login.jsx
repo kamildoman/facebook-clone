@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { signInAPI } from "../actions";
 import { Navigate } from "react-router-dom";
+import { getUserAuth } from "../actions";
+import { useNavigate } from "react-router-dom";
 
 function Login(props) {
+  const navigate = useNavigate();
+  function signingIn() {
+    props.signIn();
+  }
+
   return (
     <Container>
       {props.user && <Navigate to="/home" />}
@@ -16,7 +23,7 @@ function Login(props) {
           </span>
         </Heading>
         <Form>
-          <Google onClick={() => props.signIn()}>
+          <Google onClick={() => signingIn()}>
             <img src="/images/google.svg" alt="google" />
             Sign in with Google
           </Google>
@@ -102,6 +109,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
   signIn: () => dispatch(signInAPI()),
+  getUserAuth: () => dispatch(getUserAuth()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

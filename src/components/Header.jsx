@@ -15,6 +15,11 @@ function Header(props) {
   function homePage() {
     navigate("/home/");
   }
+
+  function logout() {
+    props.signOut();
+    navigate("/");
+  }
   return (
     <Container>
       <Logo onClick={() => homePage()}>
@@ -51,7 +56,7 @@ function Header(props) {
           )}{" "}
           {props.user ? props.user.displayName : "name"}
           {showLogout && (
-            <LogoutButton onClick={() => props.signOut()}>Logout</LogoutButton>
+            <LogoutButton onClick={() => logout()}>Logout</LogoutButton>
           )}
         </UserProfile>
 
