@@ -44,14 +44,16 @@ function SinglePost(props) {
   }, [props.users]);
 
   function like() {
-    let peopleWhoLiked = props.post.likes;
-    let user = props.user.email;
-    if (peopleWhoLiked.indexOf(user) >= 0) {
-      let newList = peopleWhoLiked.filter((e) => e !== user);
-      db.collection("posts").doc(props.id).update({ likes: newList });
-    } else {
-      peopleWhoLiked.push(user);
-      db.collection("posts").doc(props.id).update({ likes: peopleWhoLiked });
+    if (props.user) {
+      let peopleWhoLiked = props.post.likes;
+      let user = props.user.email;
+      if (peopleWhoLiked.indexOf(user) >= 0) {
+        let newList = peopleWhoLiked.filter((e) => e !== user);
+        db.collection("posts").doc(props.id).update({ likes: newList });
+      } else {
+        peopleWhoLiked.push(user);
+        db.collection("posts").doc(props.id).update({ likes: peopleWhoLiked });
+      }
     }
   }
 
@@ -106,7 +108,7 @@ function SinglePost(props) {
           <div onClick={() => like()}>
             <img src="/images/like.png" alt="like" /> {props.post.likes.length}
           </div>
-          {props.user.email === props.post.user.description && (
+          {props.user && props.user.email === props.post.user.description && (
             <div onClick={() => deletePost()}>
               <img src="/images/delete.png" alt="delete" />
             </div>

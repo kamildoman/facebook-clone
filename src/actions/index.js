@@ -36,6 +36,9 @@ export function signInAPI() {
           authProvider: "google",
           email: user.email,
           photoURL: user.photoURL,
+          school: "",
+          city: "",
+          phone: "",
         });
         // dispatch(setUser(user));
       }
@@ -104,6 +107,7 @@ export function getUserAuth() {
 }
 
 export function signOutAPI() {
+  localStorage.removeItem("user");
   return (dispatch) => {
     auth.signOut().then(() => {
       dispatch(setUser(null));

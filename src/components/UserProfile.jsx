@@ -7,6 +7,7 @@ import { getPostsAPI } from "../actions";
 import { getUsersAPI } from "../actions";
 import ProfileHeader from "./UserProfile/ProfileHeader";
 import { Navigate } from "react-router-dom";
+import ProfilePosts from "./UserProfile/ProfilePosts";
 
 function UserProfile(props) {
   const { email } = useParams();
@@ -15,33 +16,36 @@ function UserProfile(props) {
   const [isOwner, setIsOwner] = useState(false);
 
   function findUser() {
-    props.users.map((user) => {
-      if (user.data().email === email) {
-        setUser(user.data());
-        setId(user.id);
-        if (user.data().uid === props.user.uid) {
-          setIsOwner(true);
+    if (props.user) {
+      props.users.map((user) => {
+        if (user.data().email === email) {
+          setUser(user.data());
+          setId(user.id);
+          if (user.data().uid === props.user.uid) {
+            setIsOwner(true);
+          }
+          return;
         }
-        return;
-      }
-    });
+      });
+    }
   }
 
   useEffect(() => {
     props.getUsers();
     props.getPosts();
-  }, []);
+  }, [props.user]);
 
   useEffect(() => {
     findUser();
   }, [props.users]);
-
+  console.log(localStorage.getItem("user"));
   return (
     <div>
-      {!props.user && <Navigate to="/" />}
+      {!localStorage.getItem("user") && <Navigate to="/" />}
       <Header />
       <Content>
         <ProfileHeader user={user} id={id} isOwner={isOwner} />
+        <ProfilePosts user={user} id={id} isOwner={isOwner} />
       </Content>
     </div>
   );
@@ -51,7 +55,7 @@ const Content = styled.div`
   padding-top: 52px;
   max-width: 100%;
   position: absolute;
-  height: 100vh;
+  height: 100%;
   left: 0;
   right: 0;
   overflow-y: auto;

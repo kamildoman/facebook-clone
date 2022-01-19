@@ -5,10 +5,16 @@ const INITIAL_STATE = {
 const userReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case "SET_USER":
-      return {
-        ...state,
-        user: action.user,
-      };
+      if (action.user) {
+        localStorage.setItem("user", action.user.uid);
+        return {
+          ...state,
+          user: action.user,
+        };
+      } else {
+        return state;
+      }
+
     default:
       return state;
   }

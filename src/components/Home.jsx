@@ -10,7 +10,7 @@ import { Navigate } from "react-router-dom";
 function Home(props) {
   return (
     <Container>
-      {!props.user && <Navigate to="/" />}
+      {!localStorage.getItem("user") && <Navigate to="/" />}
       <Layout>
         <LeftSide />
         <Middle />
@@ -48,6 +48,7 @@ const Layout = styled.div`
 const mapStateToProps = (state) => {
   return {
     user: state.userState.user,
+    loading: state.userState.isLoading,
   };
 };
 

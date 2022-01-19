@@ -23,107 +23,111 @@ function ProfileHeader(props) {
 
   return (
     <Container>
-      a<TopSquare onClick={() => setShowPopup(false)}></TopSquare>
-      {showPopup && props.isOwner && (
-        <UploadPhoto>
-          <input
-            type="file"
-            accept="image/gif, image/jpeg, image/png"
-            name="image"
-            id="file"
-            style={{ display: "none" }}
-            onChange={(e) => {
-              handleImageChange(e);
-            }}
-          />
-          <label htmlFor="file" style={{ cursor: "pointer" }}>
-            <img src="/images/upload-image.png" alt="" />
-            Upload profile photo
-          </label>
+      <Content>
+        <TopSquare onClick={() => setShowPopup(false)}></TopSquare>
+        {showPopup && props.isOwner && (
+          <UploadPhoto>
+            <input
+              type="file"
+              accept="image/gif, image/jpeg, image/png"
+              name="image"
+              id="file"
+              style={{ display: "none" }}
+              onChange={(e) => {
+                handleImageChange(e);
+              }}
+            />
+            <label htmlFor="file" style={{ cursor: "pointer" }}>
+              <img src="/images/upload-image.png" alt="" />
+              Upload profile photo
+            </label>
 
-          <ImageDisplay>
-            {image && <img src={URL.createObjectURL(image)} alt="" />}
-            {image && (
-              <button
-                onClick={() => {
-                  uploadProfilePhoto();
-                }}
-              >
-                Upload
-              </button>
-            )}
-          </ImageDisplay>
-        </UploadPhoto>
-      )}
-      <UserPhoto>
-        <img
-          onClick={() => setShowPopup(!showPopup)}
-          src={props.user.photoURL}
-          alt="profile"
-        />
-      </UserPhoto>
-      <UserName onClick={() => setShowPopup(false)}>
-        <span>{props.user.displayName}</span>
-      </UserName>
-      <Menu onClick={() => setShowPopup(false)}>
-        <button
-          onClick={() => setActiveItem("posts")}
-          style={
-            activeItem === "posts"
-              ? {
-                  color: "#2e87fc",
-                  borderBottom: "2px solid #2e87fc",
-                }
-              : {}
-          }
-        >
-          Posts
-        </button>
-        <button
-          onClick={() => setActiveItem("info")}
-          style={
-            activeItem === "info"
-              ? {
-                  color: "#2e87fc",
-                  borderBottom: "2px solid #2e87fc",
-                }
-              : {}
-          }
-        >
-          Informations
-        </button>
-        <button
-          onClick={() => setActiveItem("photos")}
-          style={
-            activeItem === "photos"
-              ? {
-                  color: "#2e87fc",
-                  borderBottom: "2px solid #2e87fc",
-                }
-              : {}
-          }
-        >
-          Photos
-        </button>
-        <button
-          onClick={() => setActiveItem("liked")}
-          style={
-            activeItem === "liked"
-              ? {
-                  color: "#2e87fc",
-                  borderBottom: "2px solid #2e87fc",
-                }
-              : {}
-          }
-        >
-          Liked posts
-        </button>
-      </Menu>
+            <ImageDisplay>
+              {image && <img src={URL.createObjectURL(image)} alt="" />}
+              {image && (
+                <button
+                  onClick={() => {
+                    uploadProfilePhoto();
+                  }}
+                >
+                  Upload
+                </button>
+              )}
+            </ImageDisplay>
+          </UploadPhoto>
+        )}
+        <UserPhoto>
+          <img
+            onClick={() => setShowPopup(!showPopup)}
+            src={props.user.photoURL}
+            alt="profile"
+          />
+        </UserPhoto>
+        <UserName onClick={() => setShowPopup(false)}>
+          <span>{props.user.displayName}</span>
+        </UserName>
+        <Menu onClick={() => setShowPopup(false)}>
+          <button
+            onClick={() => setActiveItem("posts")}
+            style={
+              activeItem === "posts"
+                ? {
+                    color: "#2e87fc",
+                    borderBottom: "2px solid #2e87fc",
+                  }
+                : {}
+            }
+          >
+            Posts
+          </button>
+          <button
+            onClick={() => setActiveItem("info")}
+            style={
+              activeItem === "info"
+                ? {
+                    color: "#2e87fc",
+                    borderBottom: "2px solid #2e87fc",
+                  }
+                : {}
+            }
+          >
+            Informations
+          </button>
+          <button
+            onClick={() => setActiveItem("photos")}
+            style={
+              activeItem === "photos"
+                ? {
+                    color: "#2e87fc",
+                    borderBottom: "2px solid #2e87fc",
+                  }
+                : {}
+            }
+          >
+            Photos
+          </button>
+          <button
+            onClick={() => setActiveItem("liked")}
+            style={
+              activeItem === "liked"
+                ? {
+                    color: "#2e87fc",
+                    borderBottom: "2px solid #2e87fc",
+                  }
+                : {}
+            }
+          >
+            Liked posts
+          </button>
+        </Menu>
+      </Content>
     </Container>
   );
 }
 
-const Container = styled.div`
+const Container = styled.div``;
+
+const Content = styled.div`
   padding-top: 54px;
   margin-top: 1px;
   max-width: 100%;

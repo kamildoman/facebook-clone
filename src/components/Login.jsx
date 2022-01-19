@@ -11,13 +11,13 @@ function Login(props) {
     await props.signIn();
     if (!props.user) {
       console.log("Loggin in...");
-      setTimeout(window.location.reload(false), 1000);
+      setTimeout(window.location.reload(false), 500);
     }
   }
 
   return (
     <Container>
-      {props.user && <Navigate to="/home" />}
+      {localStorage.getItem("user") && <Navigate to="/home" />}
       <Content>
         <Heading>
           <img src="/images/long-logo.png" alt="" />

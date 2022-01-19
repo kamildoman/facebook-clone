@@ -25,7 +25,10 @@ function App(props) {
 }
 
 const mapStateToProps = (state) => {
-  return { users: state.usersState.users };
+  return {
+    users: state.usersState.users,
+    loading: state.userState.isLoading,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => ({
