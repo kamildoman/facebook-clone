@@ -93,7 +93,7 @@ export function getUserAuth() {
   return (dispatch) => {
     auth.onAuthStateChanged(async (user) => {
       if (user) {
-        const query = await db
+        await db
           .collection("users")
           .where("uid", "==", user.uid)
           .get()

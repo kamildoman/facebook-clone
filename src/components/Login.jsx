@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { signInAPI } from "../actions";
@@ -8,8 +8,19 @@ import { useNavigate } from "react-router-dom";
 
 function Login(props) {
   const navigate = useNavigate();
-  function signingIn() {
-    props.signIn();
+  async function signingIn() {
+    await props.signIn();
+    // var time = 1;
+
+    // setInterval(function () {
+    //   if (time <= 3 && !props.user) {
+    //     time++;
+    //     console.log("loggin in...");
+    //     console.log(props.user);
+    //   } else {
+    //     navigate("/home/");
+    //   }
+    // }, 500);
   }
 
   return (
