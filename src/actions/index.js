@@ -6,45 +6,45 @@ export const setUser = (payload) => ({
   user: payload,
 });
 
-// export function signInAPI() {
-//   return (dispatch) => {
-//     auth
-//       .signInWithPopup(provider)
-//       .then((payload) => {
-//         console.log(payload.user);
-//         dispatch(setUser(payload.user));
-//       })
-//       .catch((error) => {
-//         alert(error.message);
-//       });
-//   };
-// }
-
 export function signInAPI() {
-  return async (dispatch) => {
-    try {
-      const res = await auth.signInWithPopup(provider);
-      const user = res.user;
-      const query = await db
-        .collection("users")
-        .where("uid", "==", user.uid)
-        .get();
-      if (query.docs.length === 0) {
-        await db.collection("users").add({
-          uid: user.uid,
-          displayName: user.displayName,
-          authProvider: "google",
-          email: user.email,
-          photoURL: user.photoURL,
-        });
-      }
-      dispatch(setUser(user));
-    } catch (err) {
-      console.error(err);
-      alert(err.message);
-    }
+  return (dispatch) => {
+    auth
+      .signInWithPopup(provider)
+      .then((payload) => {
+        console.log(payload.user);
+        dispatch(setUser(payload.user));
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
   };
 }
+
+// export function signInAPI() {
+//   return async (dispatch) => {
+//     try {
+//       const res = await auth.signInWithPopup(provider);
+//       const user = res.user;
+//       const query = await db
+//         .collection("users")
+//         .where("uid", "==", user.uid)
+//         .get();
+//       if (query.docs.length === 0) {
+//         await db.collection("users").add({
+//           uid: user.uid,
+//           displayName: user.displayName,
+//           authProvider: "google",
+//           email: user.email,
+//           photoURL: user.photoURL,
+//         });
+//       }
+//       dispatch(setUser(user));
+//     } catch (err) {
+//       console.error(err);
+//       alert(err.message);
+//     }
+//   };
+// }
 
 // export async function signInAPI() {
 //   try {
