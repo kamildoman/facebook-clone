@@ -6,17 +6,22 @@ import styled from "styled-components";
 import { getPostsAPI } from "../actions";
 import { getUsersAPI } from "../actions";
 import ProfileHeader from "./UserProfile/ProfileHeader";
+import { Navigate } from "react-router-dom";
 
 function UserProfile(props) {
   const { email } = useParams();
   const [user, setUser] = useState("");
   const [id, setId] = useState("");
+  const [isOwner, setIsOwner] = useState(false);
 
   function findUser() {
     props.users.map((user) => {
       if (user.data().email === email) {
         setUser(user.data());
         setId(user.id);
+        if (user.data().uid === props.user.uid) {
+          setIsOwner(true);
+        }
         return;
       }
     });
@@ -33,9 +38,10 @@ function UserProfile(props) {
 
   return (
     <div>
+      {!props.user && <Navigate to="/" />}
       <Header />
       <Content>
-        <ProfileHeader user={user} id={id} />
+        <ProfileHeader user={user} id={id} isOwner={isOwner} />
       </Content>
     </div>
   );

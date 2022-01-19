@@ -24,7 +24,7 @@ function ProfileHeader(props) {
   return (
     <Container>
       a<TopSquare onClick={() => setShowPopup(false)}></TopSquare>
-      {showPopup && (
+      {showPopup && props.isOwner && (
         <UploadPhoto>
           <input
             type="file"

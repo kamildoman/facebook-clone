@@ -10,6 +10,7 @@ import { getCommentsAPI } from "../actions";
 import Pluralize from "react-pluralize";
 import ReactPlayer from "react-player";
 import { getUsersAPI } from "../actions";
+import { useNavigate } from "react-router-dom";
 
 function SinglePost(props) {
   const [showComments, setShowComments] = useState(false);
@@ -17,6 +18,11 @@ function SinglePost(props) {
 
   function handleShowComments() {
     setShowComments(!showComments);
+  }
+
+  const navigate = useNavigate();
+  function navigateTo() {
+    navigate("/profile/" + props.post.user.description);
   }
 
   // if I change a user's profile the photo won't change on his previous posts. This function changes it
@@ -79,9 +85,9 @@ function SinglePost(props) {
     <Container>
       <Content>
         <SharedPerson>
-          <img src={userPhoto} alt="user" />
+          <img src={userPhoto} alt="user" onClick={() => navigateTo()} />
 
-          <PersonInfo>
+          <PersonInfo onClick={() => navigateTo()}>
             <h3>{props.post.user.title}</h3>
 
             <h5>{howLongTimeAgo(props.post.user.date.toDate())}</h5>
@@ -237,6 +243,7 @@ const SocialCount = styled.div`
 
   p:hover {
     cursor: pointer;
+    text-decoration: underline;
   }
 `;
 

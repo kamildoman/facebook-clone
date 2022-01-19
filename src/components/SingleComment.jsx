@@ -1,17 +1,45 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { getUsersAPI } from "../actions";
+import { connect } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function SingleComment(props) {
+  const [userPhoto, setUserPhoto] = useState("");
+
+  const navigate = useNavigate();
+  function navigateTo() {
+    navigate("/profile/" + props.comment.data().user.description);
+  }
+
+  async function getUserPhoto() {
+    props.users.map((singleUser) => {
+      if (singleUser.data().uid === props.comment.data().user.uid) {
+        setUserPhoto(singleUser.data().photoURL);
+      }
+    });
+  }
+
+  useEffect(() => {
+    props.getUsers();
+  }, []);
+
+  useEffect(() => {
+    getUserPhoto();
+  }, [props.users]);
+
   return (
     <Container>
       <Content>
         <ShareBox>
-          <UserIcon>
-            <img src={props.comment.data().user.image} alt="userphoto" />
+          <UserIcon onClick={() => navigateTo()}>
+            <img src={userPhoto} alt="userphoto" />
           </UserIcon>
           <div>
             <span>
-              <h5>{props.comment.data().user.title}</h5>
+              <h5 onClick={() => navigateTo()}>
+                {props.comment.data().user.title}
+              </h5>
               {props.comment.data().comment}
             </span>
           </div>
@@ -21,7 +49,7 @@ function SingleComment(props) {
   );
 }
 const Container = styled.div`
-  width: 100%;
+  width: 95%;
   overflow-y: auto;
   ::-webkit-scrollbar {
     display: none;
@@ -53,6 +81,10 @@ const ShareBox = styled.div`
       h5 {
         margin-bottom: 5px;
       }
+      h5:hover {
+        cursor: pointer;
+        text-decoration: underline;
+      }
     }
   }
 `;
@@ -72,6 +104,7 @@ const UserIcon = styled.div`
   align-items: flex-start;
   padding: 9px;
   border-radius: 8px;
+  cursor: pointer;
   img {
     width: 40px;
     height: 40px;
@@ -79,4 +112,14 @@ const UserIcon = styled.div`
     border-radius: 50%;
   }
 `;
-export default SingleComment;
+const mapStateToProps = (state) => {
+  return {
+    users: state.usersState.users,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  getUsers: () => dispatch(getUsersAPI()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SingleComment);

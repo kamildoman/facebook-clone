@@ -155,7 +155,7 @@ export function commentAPI(payload) {
         description: payload.user.email,
         title: payload.user.displayName,
         date: payload.timestamp,
-        image: payload.user.photoURL,
+        uid: payload.user.uid,
       },
       postID: payload.postID,
       comment: payload.comment,

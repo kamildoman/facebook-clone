@@ -84,6 +84,7 @@ const Container = styled.div`
 
 const Logo = styled.div`
   padding: 6px 0;
+  cursor: pointer;
   img {
     border-radius: 50%;
     width: 45px;
