@@ -38,6 +38,11 @@ function UserProfile(props) {
   useEffect(() => {
     findUser();
   }, [props.users]);
+
+  useEffect(() => {
+    findUser();
+  }, [window.location.href]);
+
   console.log(localStorage.getItem("user"));
   return (
     <div>

@@ -37,9 +37,10 @@ function Middle(props) {
           <img src="/images/middle/photo-video.png" alt="" /> Photo/Video
         </UploadImage>
       </Content>
-      {props.posts.map((post, key) => (
-        <SinglePost key={key} post={post.data()} id={post.id} />
-      ))}
+      {props.showPosts &&
+        props.posts.map((post, key) => (
+          <SinglePost key={key} post={post.data()} id={post.id} />
+        ))}
     </Container>
   );
 }
@@ -49,7 +50,6 @@ const Container = styled.div`
   max-height: calc(100vh - 80px);
 
   z-index: 999;
-  height: 100vh;
   width: 100%;
   overflow-y: auto;
   ::-webkit-scrollbar {

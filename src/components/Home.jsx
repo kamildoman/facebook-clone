@@ -13,7 +13,7 @@ function Home(props) {
       {!localStorage.getItem("user") && <Navigate to="/" />}
       <Layout>
         <LeftSide />
-        <Middle />
+        <Middle showPosts={true} />
         <RightSide />
       </Layout>
     </Container>

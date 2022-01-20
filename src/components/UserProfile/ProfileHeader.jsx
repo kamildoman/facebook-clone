@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import db from "../../firebase";
 import { storage } from "../../firebase";
@@ -16,10 +16,17 @@ function ProfileHeader(props) {
     const upload = storage.ref(`images/${image.name}`).put(image);
     upload.on("state_changed", async () => {
       const downloadURL = await upload.snapshot.ref.getDownloadURL();
-      db.collection("users").doc(props.id).update({ photoURL: downloadURL });
+      await db
+        .collection("users")
+        .doc(props.id)
+        .update({ photoURL: downloadURL });
     });
     setShowPopup(false);
   }
+
+  // useEffect(() => {
+  //   window.location.reload(false);
+  // }, [props.user.photoURL]);
 
   return (
     <Container>

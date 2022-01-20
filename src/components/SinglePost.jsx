@@ -254,11 +254,12 @@ const SocialActions = styled.div`
   align-items: center;
   justify-content: space-between;
   margin-top: 6px;
+  overflow-wrap: anywhere;
 
   button {
     display: flex;
     align-items: center;
-    padding: 2px 20px;
+    padding: 2px 5px;
     height: 40px;
     border-radius: 12px;
     border: none;

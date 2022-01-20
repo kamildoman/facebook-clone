@@ -9,9 +9,13 @@ function Login(props) {
   async function signingIn() {
     console.log("Loggin in...");
     await props.signIn();
-    if (!props.user) {
+    // some new users don't get logged in immidately, need to wait a bit and refresh
+    if (!localStorage.getItem("user")) {
       console.log("Loggin in...");
-      setTimeout(window.location.reload(false), 500);
+      setTimeout(window.location.reload(false), 1200);
+      if (!localStorage.getItem("user")) {
+        setTimeout(window.location.reload(false), 1200);
+      }
     }
   }
 

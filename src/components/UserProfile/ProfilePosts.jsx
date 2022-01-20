@@ -6,27 +6,13 @@ import { connect } from "react-redux";
 import { getPostsAPI } from "../../actions";
 
 function ProfilePosts(props) {
-  const [postsToDisplay, setPostsToDisplay] = useState([]);
-
-  function filterPosts() {
-    props.posts
-      .filter((post) => {
-        return post.data().user.description === props.user.email;
-      })
-      .map((post) => {
-        setPostsToDisplay(...postsToDisplay, post.data());
-      });
-  }
-
-  useEffect(() => {
-    filterPosts();
-  }, []);
+  // console.log(postsToDisplay);
 
   return (
     <Container>
       <Layout>
-        <PostLeft user={props.user} posts={postsToDisplay} />
-        <PostRight />
+        <PostLeft user={props.user} isOwner={props.isOwner} />
+        <PostRight user={props.user} isOwner={props.isOwner} />
       </Layout>
     </Container>
   );
@@ -34,7 +20,6 @@ function ProfilePosts(props) {
 
 const Container = styled.div`
   margin-top: 70vh;
-  z-index: 9999999;
 `;
 
 const Layout = styled.div`
