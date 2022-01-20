@@ -4,7 +4,6 @@ import styled from "styled-components";
 function SinglePhoto(props) {
   console.log(props.post);
   console.log("AAAA");
-  const img = props.post.sharedIMG;
   return (
     <Container>
       <Image>
