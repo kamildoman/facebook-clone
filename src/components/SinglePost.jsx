@@ -128,13 +128,13 @@ function SinglePost(props) {
 
         <SocialActions>
           <button onClick={() => like()}>
-            <img src="/images/like-button.png" alt="" /> Like
+            <img src="/images/like-button.png" alt="" /> <span>Like</span>
           </button>
           <button onClick={() => handleShowComments()}>
-            <img src="/images/comment-button.png" alt="" /> Comment
+            <img src="/images/comment-button.png" alt="" /> <span>Comment</span>
           </button>
           <button>
-            <img src="/images/share-button.png" alt="" /> Share
+            <img src="/images/share-button.png" alt="" /> <span>Share</span>
           </button>
         </SocialActions>
       </Content>
@@ -276,6 +276,11 @@ const SocialActions = styled.div`
 
   img {
     margin-right: 6px;
+  }
+  @media (max-width: 380px) {
+    span {
+      display: none;
+    }
   }
 `;
 

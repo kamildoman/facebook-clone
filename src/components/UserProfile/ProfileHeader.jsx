@@ -148,6 +148,9 @@ const Content = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  @media (max-width: 768px) {
+    height: 40vh;
+  }
 `;
 
 const TopSquare = styled.div`
@@ -162,6 +165,9 @@ const TopSquare = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  @media (max-width: 768px) {
+    height: 30vh;
+  }
 `;
 
 const UserPhoto = styled.div`
@@ -177,6 +183,13 @@ const UserPhoto = styled.div`
   }
   img:hover {
     opacity: 0.7;
+  }
+  @media (max-width: 768px) {
+    bottom: 30%;
+    img {
+      width: 100px;
+      height: 100px;
+    }
   }
 `;
 
@@ -240,6 +253,11 @@ const UserName = styled.div`
   width: 60%;
   text-align: center;
   border-bottom: 2px solid #393a3b;
+  @media (max-width: 768px) {
+    font-size: 20px;
+    bottom: 15%;
+    height: 25px;
+  }
 `;
 
 const Menu = styled.div`
@@ -259,6 +277,12 @@ const Menu = styled.div`
 
   button:hover {
     background: #3a3b3c;
+  }
+  @media (max-width: 768px) {
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
   }
 `;
 
